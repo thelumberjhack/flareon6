@@ -10,6 +10,6 @@ From this [Tweet](https://twitter.com/nickharbour/status/1161253276538376194):
 
 ## Write-up
 
-Stage 1: "RAINBOW"
-Stage 2: "Bagel_Canon"
-Stage 3: ...
+- Stage 1: "RAINBOW"
+- Stage 2: "Bagel_Canon"
+- Stage 3: ...
