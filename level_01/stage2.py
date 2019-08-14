@@ -1,3 +1,4 @@
+# Flare-on 6: Level 1 - Stage 2
 def is_valid_weapon_code() -> None:
     result = [
         '\u0003',
@@ -20,8 +21,6 @@ def is_valid_weapon_code() -> None:
         key[i] ^= (65 + i*2)
 
     print("".join([chr(c) for c in key]))
-
-    return True
 
 if __name__ == "__main__":
     is_valid_weapon_code()
