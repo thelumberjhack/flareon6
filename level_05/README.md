@@ -31,3 +31,7 @@ Flag: moar_pouetry@flare-on.com
 
 After finding the texture, maybe there's a way to display it while debugging the
 application...
+
+## Links
+
+[deviantart](https://www.deviantart.com/xcurtainx/journal/Rip-Your-Favorite-3D-Game-Character-Models-FREE-753410159)
