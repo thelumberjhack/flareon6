@@ -731,13 +731,13 @@ internal class Program
 	{
 		Init();
 		yy += 18;
-		string filename = args[2];
-		string fullPath = Path.GetFullPath(args[0]);
-		string fullPath2 = Path.GetFullPath(args[1]);
-		byte[] data = File.ReadAllBytes(fullPath2);
-		Bitmap bitmap = new Bitmap(fullPath);
-		byte[] data2 = h(data);
-		i(bitmap, data2);
-		bitmap.Save(filename);
+		string filename = args[2]; 						// output
+		string fullPath = Path.GetFullPath(args[0]);	// image to hide data in
+		string fullPath2 = Path.GetFullPath(args[1]);	// data to hide
+		byte[] data = File.ReadAllBytes(fullPath2);		// gets the data to be hidden
+		Bitmap bitmap = new Bitmap(fullPath);			// reads orig BMP data
+		byte[] data2 = h(data);							// shuffle data
+		i(bitmap, data2);								// hide it in BMP
+		bitmap.Save(filename);							// saves it to new BMP
 	}
 }
