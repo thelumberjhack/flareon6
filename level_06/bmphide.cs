@@ -456,6 +456,7 @@ public class A
 
 	public unsafe static void VerifySignature(MethodInfo m1, MethodInfo m2)
 	{
+		// Prepare the methods so they get jited
 		RuntimeHelpers.PrepareMethod(m1.MethodHandle);
 		RuntimeHelpers.PrepareMethod(m2.MethodHandle);
 		int* ptr = (int*)((byte*)m1.MethodHandle.Value.ToPointer() + 2L * 4L);
