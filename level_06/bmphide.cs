@@ -358,40 +358,42 @@ public class A
 		ulong* ptr = stackalloc ulong[2];
 		if (ver4)
 		{
-			*ptr = 7218835248827755619uL;
-			ptr[1] = 27756uL;
+			*ptr = 7218835248827755619uL;	// 'clrjit.d'
+			ptr[1] = 27756uL;				// 'll'
 		}
 		else
 		{
-			*ptr = 8388352820681864045uL;
-			ptr[1] = 1819042862uL;
+			*ptr = 8388352820681864045uL;	// 'mscorjit'
+			ptr[1] = 1819042862uL;			// '.dll'
 		}
 		IntPtr lib = LoadLibrary(new string((sbyte*)ptr));
-		*ptr = 127995569530215uL;
+		*ptr = 127995569530215uL; 				// 'getJit'
 		getJit getJit = (getJit)Marshal.GetDelegateForFunctionPointer(GetProcAddress(lib, new string((sbyte*)ptr)), typeof(getJit));
 		IntPtr intPtr = *getJit();
 		IntPtr val = *(IntPtr*)(void*)intPtr;
-		IntPtr intPtr2;
+		IntPtr intPtr2;												// Unmanaged function pointer
 		uint lpflOldProtect;
-		if (IntPtr.Size == 8)
+		if (IntPtr.Size == 8) 										// x64
 		{
 			intPtr2 = Marshal.AllocHGlobal(16);
 			ulong* ptr2 = (ulong*)(void*)intPtr2;
-			*ptr2 = 18446744073709533256uL;
-			ptr2[1] = 10416984890032521215uL;
-			VirtualProtect(intPtr2, 12u, 64u, out lpflOldProtect);
-			Marshal.WriteIntPtr(intPtr2, 2, val);
+			*ptr2 = 18446744073709533256uL;							// '48 b8 ff ff ff ff ff ff'
+			ptr2[1] = 10416984890032521215uL;						// 'ff ff ff e0 90 90 90 90'
+			VirtualProtect(intPtr2, 12u, 64u, out lpflOldProtect);	// 12 bytes of PAGE_READWRITE_EXECUTE mem
+			Marshal.WriteIntPtr(intPtr2, 2, val);					// Writes val at offset 2 of intPtr2 address
 		}
 		else
 		{
-			intPtr2 = Marshal.AllocHGlobal(8);
+			intPtr2 = Marshal.AllocHGlobal(8);						// x86
 			ulong* ptr3 = (ulong*)(void*)intPtr2;
-			*ptr3 = 10439625411221520312uL;
-			VirtualProtect(intPtr2, 7u, 64u, out lpflOldProtect);
-			Marshal.WriteIntPtr(intPtr2, 1, val);
+			*ptr3 = 10439625411221520312uL;							// 'b8 ff ff ff ff ff e0 90'
+			VirtualProtect(intPtr2, 7u, 64u, out lpflOldProtect);	// 7 bytes of PAGE_READWRITE_EXECUTE mem
+			Marshal.WriteIntPtr(intPtr2, 1, val);					// 
 		}
+		//Converts an unmanaged function pointer to a delegate.
 		originalDelegate = (locateNativeCallingConvention)Marshal.GetDelegateForFunctionPointer(intPtr2, typeof(locateNativeCallingConvention));
 		handler = IncrementMaxStack;
+		// Indicates that the specified delegate should be prepared for inclusion in a constrained execution region (CER).
 		RuntimeHelpers.PrepareDelegate(originalDelegate);
 		RuntimeHelpers.PrepareDelegate(handler);
 		VirtualProtect(intPtr, (uint)IntPtr.Size, 64u, out lpflOldProtect);
@@ -499,22 +501,30 @@ internal class Program
 
 	private static void Init()
 	{
-		yy *= 136;
+		yy *= 136;							// yy = 136 * 20 = 2720
 		Type typeFromHandle = typeof(A);
-		ww += "14";
-		MethodInfo[] methods = typeFromHandle.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+		ww += "14";							// ww = "1f7d14"
+		// searches for the methods defined for the current Type, using the specified binding constraints
+		MethodInfo[] methods = typeFromHandle.GetMethods(
+			BindingFlags.DeclaredOnly		// Specifies that only members declared at the level of the supplied type's hierarchy should be considered. Inherited members are not considered.
+			| BindingFlags.Instance			// Specifies that instance members are to be included in the search.
+			| BindingFlags.Static			// Specifies that static members are to be included in the search.
+			| BindingFlags.Public 			// Specifies that public members are to be included in the search.
+			| BindingFlags.NonPublic		// Specifies that non-public members are to be included in the search.
+		);
 		MethodInfo[] array = methods;
 		foreach (MethodInfo methodInfo in array)
 		{
+			//Prepares a method for inclusion in a constrained execution region (CER).
 			RuntimeHelpers.PrepareMethod(methodInfo.MethodHandle);
 		}
 		A.CalculateStack();
-		ww += "82";
+		ww += "82";							// ww = "1f7d1482"
 		MethodInfo m = null;
 		MethodInfo m2 = null;
 		MethodInfo m3 = null;
 		MethodInfo m4 = null;
-		zz = "MzQxOTk=";
+		zz = "MzQxOTk=";					// zz = '34199'
 		MethodInfo[] methods2 = typeof(Program).GetMethods();
 		foreach (MethodInfo methodInfo2 in methods2)
 		{
