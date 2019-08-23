@@ -459,8 +459,8 @@ public class A
 		// Prepare the methods so they get jited
 		RuntimeHelpers.PrepareMethod(m1.MethodHandle);
 		RuntimeHelpers.PrepareMethod(m2.MethodHandle);
-		int* ptr = (int*)((byte*)m1.MethodHandle.Value.ToPointer() + 2L * 4L);
-		int* ptr2 = (int*)((byte*)m2.MethodHandle.Value.ToPointer() + 2L * 4L);
+		int* ptr = (int*)((byte*)m1.MethodHandle.Value.ToPointer() + 2L * 4L);	// method to replace
+		int* ptr2 = (int*)((byte*)m2.MethodHandle.Value.ToPointer() + 2L * 4L);	// method to inject
 		*ptr = *ptr2;
 	}
 }
