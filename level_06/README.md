@@ -22,7 +22,7 @@ The main function is in the Program class and is as follows:
 private static void Main(string[] args)
 {
     Init();
-    yy += 18;
+    yy += 18;                                       // yy = 2738, ww = "1F7D1482", zz = "MzQxOTk="
     string filename = args[2]; 						// output
     string fullPath = Path.GetFullPath(args[0]);	// image to hide data in
     string fullPath2 = Path.GetFullPath(args[1]);	// data to hide
