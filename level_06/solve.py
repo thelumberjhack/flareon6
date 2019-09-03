@@ -7,8 +7,8 @@ def func_b(b, r):
     """
     """
     for i in range(r):
-        b2 = int((b & 0x80)/128) & 0xff
-        b = (((b * 2) & 0xff) + b2) & 0xff
+        b2 = ((b & 0x80) >> 7) & 0xff
+        b = (((b << 2) & 0xff) + b2) & 0xff
 
     return b
 
@@ -17,8 +17,8 @@ def func_d(b, r):
     """
     """
     for i in range(r):
-        b2 = ((b & 1)*128) & 0xff
-        b = ((int(b / 2) & 0xff) + b2) & 0xff
+        b2 = ((b & 1) << 7) & 0xff
+        b = (((b >> 1) & 0xff) + b2) & 0xff
 
     return b
 
@@ -108,6 +108,8 @@ def main():
         data = extract_data(bmp)
 
         test = func_h(data)
+
+        print(f"{test[:10]}")
 
         with open('./test.bmp', 'wb') as fh:
             fh.write(test)
