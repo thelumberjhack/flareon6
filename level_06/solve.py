@@ -39,24 +39,25 @@ def func_g(idx):
 
     return func_e(b, k)
 
-def func_h(data):
-    dlength = len(data)
-    array = bytearray(dlength)
-    num = 0
-    for i in range(dlength):
-        num3 = func_g(num)
-        num += 1
-        num4 = data[i]
-        num4 = func_e(num4, num3)
-        num4 = func_b(num4, 7)
-        num6 = func_g(num)
-        num += 1
-        num4 = func_e(num4, num6)
-        num4 = func_d(num4, 3)
+def func_h(data, num):
+    # print(f"Calling h with {data} {num}")
+    # dlength = len(data)
+    # array = bytearray(dlength)
+    # num = 0
+    # for i in range(dlength):
+    num3 = func_g(num)
+    num += 1
+    num4 = data
+    num4 = func_e(num4, num3)
+    num4 = func_b(num4, 7)
+    num6 = func_g(num)
+    num += 1
+    num4 = func_e(num4, num6)
+    num4 = func_d(num4, 3)
 
-        array[i] = num4
+    # array[i] = num4
 
-    return array
+    return num4
 
 
 def extract_data(bmpdata):
@@ -83,8 +84,18 @@ def extract_data(bmpdata):
 def unscramble(data):
     """ Unscramble data to original file.
     """
-    pass
+    array = ""
 
+    for i in range(len(data)):
+        num = i * 2
+        for b in range(0xff):
+            tmp = func_h(b, num)
+            if tmp == data[i]:
+                array += chr(b)
+                print(f"{num}: {array[:100]}")
+                break
+            else:
+                continue
 
 def main():
     parser = argparse.ArgumentParser(
@@ -107,9 +118,9 @@ def main():
 
         data = extract_data(bmp)
 
-        test = func_h(data)
+        test = unscramble(data)
 
-        print(f"{test[:10]}")
+        # print(f"{test[:10]}")
 
         with open('./test.bmp', 'wb') as fh:
             fh.write(test)
