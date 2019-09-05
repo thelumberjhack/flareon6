@@ -84,6 +84,10 @@ MethodDesc Table
 02630898 00e84ef0    JIT BMPHIDE.Program.Main(System.String[])
 ```
 
+## Flag
+
+`dOnT_tRu$t_vEr1fy@flare-on.com`
+
 ## Resources
 
 - [.NET Internals and Code Injection](https://www.codeproject.com/articles/26060/net-internals-and-code-injection)

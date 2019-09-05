@@ -1002,19 +1002,22 @@ namespace BMPHIDE {
 		}
 
 		public static byte[] bf(byte[] data) {
-            int num = 0;
-            byte[] array = new byte[data.Length] ;
+			int num = 0;
+
+			byte[] array = new byte[data.Length];
 
 			for (int i = 0; i < data.Length; i++) {
-				int num = i*2;
-                for (int b = 0; b < 0xff; b++){
-                    byte tmp = _h(data[i], num);
-                    if (tmp == data[i]) {
-                        array[i] = tmp;
-                        break;
-                    }
-                }
+				num = i * 2;
+				for (byte b = 0; b <= 0xff; b++) {
+					byte tmp = _h(b, num);
+					if (tmp == data[i]) {
+						array[i] = b;
+						break;
+					}
+				}
 			}
+
+			return array;
 		}
 		
 		private static void Main(string[] args)
@@ -1037,7 +1040,12 @@ namespace BMPHIDE {
 			Bitmap bitmap = new Bitmap(fullPath);
 			// byte[] data2 = h(data);
 			// i(bitmap, data2);
+			Console.WriteLine("[+] Extracting data...");
 			byte[] data = extract_data(bitmap);
+			Console.WriteLine("[+] Bruteforcing...");
+			byte[] orig_data = bf(data);
+			Console.WriteLine("[+] Done, writing file to disk...");
+			File.WriteAllBytes(filename, orig_data);
 			// bruteforce bytes until we find data
 			// bitmap.Save(filename);
 		}
