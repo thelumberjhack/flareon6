@@ -84,6 +84,17 @@ MethodDesc Table
 02630898 00e84ef0    JIT BMPHIDE.Program.Main(System.String[])
 ```
 
+### Useful Windbg + .Net commands
+
+```
+sxe ld clrjit; g
+.loadby sos clr
+.load sosex
+!name2ee bmphide BMPHIDE.Program
+!dumpmt -md <method_table_addr>
+!bpmd bmphide BMPHIDE.Program.Main
+```
+
 ## Flag
 
 `dOnT_tRu$t_vEr1fy@flare-on.com`
