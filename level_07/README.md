@@ -106,7 +106,34 @@ those 16 bytes:
 
 And this time uncompyle6 is able to give us the original source code [cleanup]('./cleanup.py').
 
-### Raven poem
+### The Raven
+
+Uncompyle replaces tabs with spaces at the end of the docstrings line so we need to extract
+docstrings from the pyc directly:
+
+```shell
+>>> start = 0x16d
+
+>>> end = 0x8f94
+
+>>> hex(end -start)       
+'0x8e27'
+
+>>> docstring = None       
+
+>>> with open('./cleanup.py', 'rb') as f:
+...     code  = f.read()
+...     with open('./cleanup2.py', 'wb') as h:
+...         h.write(docstring + code)
+```
+
+### stage 2
+
+```shell
+>>> xor = [212, 162, 242, 218, 101, 109, 50, 31, 125, 112, 249, 83, 55, 187, 131, 206]
+
+>>> h = [30, 254, 225, 26, 229, 131, 35, 120, 29, 18, 211, 112, 227, 1, 101, 119]
+```
 
 ## Resources
 
